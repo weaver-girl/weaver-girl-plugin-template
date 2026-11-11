@@ -27,7 +27,7 @@
         <!-- The only contract a plugin compiles against. The agent supplies it at runtime,
              so bundling it in the plugin jar would break parent-first delegation. -->
         <dependency>
-            <groupId>com.github.cc11001100</groupId>
+            <groupId>io.github.cc11001100</groupId>
             <artifactId>weaver-girl-api</artifactId>
             <version>${weaver-girl.version}</version>
             <scope>provided</scope>
@@ -36,7 +36,7 @@
         <!-- In-process harness: attaches the instrumentation agent in the test JVM and weaves
              only the classes the test names. Test scope; never shipped. -->
         <dependency>
-            <groupId>com.github.cc11001100</groupId>
+            <groupId>io.github.cc11001100</groupId>
             <artifactId>weaver-girl-testkit</artifactId>
             <version>${weaver-girl.version}</version>
             <scope>test</scope>
