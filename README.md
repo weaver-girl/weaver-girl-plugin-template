@@ -84,7 +84,10 @@ git clone https://github.com/weaver-girl/weaver-girl.git
 cd weaver-girl && ./mvnw -DskipTests install
 ```
 
-Then `mvn verify` in this repository resolves `1.0.0-SNAPSHOT` from `~/.m2`.
+Then `mvn verify` in this repository resolves `1.0.0-SNAPSHOT` from `~/.m2`. CI does the same
+automatically: it builds `weaver-girl-api` and `weaver-girl-testkit` from the core's `main` before
+building this project. After `1.0.0` is released, remove the core checkout and the install step
+from `.github/workflows/build.yml`.
 
 ## Full documentation
 

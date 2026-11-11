@@ -17,11 +17,32 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v6
+      # Until 1.0.0 is on Maven Central there is nothing to resolve the snapshot from,
+      # so build the two contract modules from the core's main branch into the local
+      # repository. After the first release, drop the core checkout and the install
+      # step and let Maven resolve the released version instead.
+      - uses: actions/checkout@v7
+        with:
+          repository: weaver-girl/weaver-girl
+          path: .core
+          fetch-depth: 1
+
+      - name: Set up JDK 17 (core build)
+        uses: actions/setup-java@v6
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+
+      - name: Install weaver-girl-api and testkit from core main
+        working-directory: .core
+        run: ./mvnw -B --no-transfer-progress -pl weaver-girl-api,weaver-girl-testkit -am install -Dmaven.test.skip=true -Djacoco.skip=true -Dcheckstyle.skip=true -Dspotbugs.skip=true
+
+      - name: Set up JDK ${{ matrix.java }} (plugin build)
+        uses: actions/setup-java@v6
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
-          cache: maven
 
       - name: Build and test
         run: mvn -B --no-transfer-progress verify
